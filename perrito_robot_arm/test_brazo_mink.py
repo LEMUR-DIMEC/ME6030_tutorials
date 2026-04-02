@@ -57,16 +57,19 @@ if __name__ == "__main__":
         configuration.update_from_keyframe("pick")
 
         # Initialize the mocap target at the end-effector site.
-        mink.move_mocap_to_frame(model, data, "target", "attachment_site", "site")
+        #mink.move_mocap_to_frame(model, data, "target", "attachment_site", "site")
 
-        rate = RateLimiter(frequency=500.0, warn=False)
+        rate = RateLimiter(frequency=5000.0, warn=False)
         while viewer.is_running():
             # Update task target.
-            T_wt = mink.SE3.from_mocap_name(model, data, "target")
+            #T_wt = mink.SE3.from_mocap_name(model, data, "target")
             #Method for setting fixed target
-            # tar= mink.SE3.identity()
-            # tar.translation()[:] = np.array([0.3, 0.0, 0.3])
-            end_effector_task.set_target(T_wt)
+            tar= mink.SE3.identity()
+            tar.translation()[:] = np.array([0.3, 0.1, 0.3])
+            for i in range(100):
+                tar.translation()[0] += 0.005
+                end_effector_task.set_target(tar)
+            end_effector_task.set_target(tar)
 
             # Compute velocity and integrate into the next configuration.
             vel = mink.solve_ik(

@@ -66,9 +66,6 @@ if __name__ == "__main__":
             #Method for setting fixed target
             tar= mink.SE3.identity()
             tar.translation()[:] = np.array([0.3, 0.1, 0.3])
-            for i in range(100):
-                tar.translation()[0] += 0.005
-                end_effector_task.set_target(tar)
             end_effector_task.set_target(tar)
 
             # Compute velocity and integrate into the next configuration.
